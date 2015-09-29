@@ -154,3 +154,15 @@ blockquote {
   padding: 6px 13px;
   border: 1px solid #ddd;
 }
+
+/* Components examples should be aligned vertically on vaadin.com docs page */
+/* vaadin-docs styles */
+.documentation-site-page code-example {
+  flex-direction: column;
+}
+
+.documentation-site-page code-example .code.code-example {
+  padding-left: 0;
+  padding-top: 3em;
+}
+/* end -- vaadin-docs styles */
