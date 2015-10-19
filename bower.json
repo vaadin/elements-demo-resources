@@ -1,5 +1,5 @@
 {
-  "name": "components-demo-resources",
+  "name": "elements-demo-resources",
   "version": "1.0.0",
   "authors": [
     "Vaadin Ltd"
@@ -7,7 +7,7 @@
   "keywords": [
     "web-components",
     "vaadin",
-    "vaadin components"
+    "vaadin elements"
   ],
   "license": "Apache License 2.0",
   "ignore": [
