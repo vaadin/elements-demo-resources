@@ -15,6 +15,7 @@
   "dependencies": {
     "code-example": "master",
     "table-of-contents": "~0.0.2",
-    "iframe-resizer": "^3.5.7"
+    "iframe-resizer": "^3.5.7",
+    "iron-demo-helpers": "^1.2.5"
   }
 }
