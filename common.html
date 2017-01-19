@@ -1,34 +1,36 @@
 <link rel="import" href="../iron-demo-helpers/demo-pages-shared-styles.html">
-<style is="custom-style" include="demo-pages-shared-styles">
-  :root {
-    --primary-color: #00B4F0;
-    --light-primary-color: #7CD8F7;
-    --dark-primary-color: #0078A0;
-    --error-color: #E61E6E;
+<custom-style>
+  <style is="custom-style" include="demo-pages-shared-styles">
+    :root {
+      --primary-color: #00B4F0;
+      --light-primary-color: #7CD8F7;
+      --dark-primary-color: #0078A0;
+      --error-color: #E61E6E;
+    }
 
-  }
-  .centered {
-    max-width: 800px;
-  }
+    .centered {
+      max-width: 800px;
+    }
 
-  h3 .anchor {
-    color: grey;
-    text-decoration: none;
-    opacity: 0;
-    font-size: 14px;
-    margin-left: -26px;
-    padding-right: 12px;
-    outline: none;
-  }
+    h3 .anchor {
+      color: grey;
+      text-decoration: none;
+      opacity: 0;
+      font-size: 14px;
+      margin-left: -26px;
+      padding-right: 12px;
+      outline: none;
+    }
 
-  h3:hover .anchor {
-    opacity: 1;
-  }
+    h3:hover .anchor {
+      opacity: 1;
+    }
   
-  demo-navigation {
-    margin-bottom: 2em;
-  }
-</style>
+    demo-navigation {
+      margin-bottom: 2em;
+    }
+  </style>
+</custom-style>
 
 <script>
   [].forEach.call(document.querySelectorAll('h3'), function(h3) {
