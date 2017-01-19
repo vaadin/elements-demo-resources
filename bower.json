@@ -13,9 +13,7 @@
     "bower_components"
   ],
   "dependencies": {
-    "code-example": "master",
-    "table-of-contents": "~0.0.2",
-    "iframe-resizer": "^3.5.7",
-    "iron-demo-helpers": "^1.2.5"
+    "iron-demo-helpers": "2.0-preview",
+    "iframe-resizer": "^3.5.8"
   }
 }
