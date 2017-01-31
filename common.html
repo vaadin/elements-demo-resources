@@ -10,7 +10,39 @@
   .centered {
     max-width: 800px;
   }
+
+  h3 .anchor {
+    color: grey;
+    text-decoration: none;
+    opacity: 0;
+    font-size: 14px;
+    margin-left: -26px;
+    padding-right: 12px;
+    outline: none;
+  }
+
+  h3:hover .anchor {
+    opacity: 1;
+  }
 </style>
+
+<script>
+  [].forEach.call(document.querySelectorAll('h3'), function(h3) {
+    var id = h3.textContent.toLowerCase().replace(/[^\w]+/, '-');
+    var hash = '#' + id;
+    var a = document.createElement('a');
+    a.textContent = '🔗';
+    a.classList.add('anchor');
+    a.href = hash;
+    a.id = id;
+    h3.insertBefore(a, h3.firstChild);
+    if (window.location.hash == hash) {
+      setTimeout(function() {
+        h3.scrollIntoView();
+      }, 500);
+    }
+  });
+</script>
 
 <script src="../iframe-resizer/js/iframeResizer.contentWindow.min.js"></script>
 <script src="ga.js"></script>
