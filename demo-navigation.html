@@ -82,10 +82,12 @@ Then, just include the component in each demo page.
       },
       is: 'demo-navigation',
       _current: function(item) {
-        return window.location.href.replace(/^.*\/(.*?)\.html.*$/,'$1') === item.name;
+        var url = window.location.pathname;
+        var filename = url.substring(url.lastIndexOf('/') + 1) || 'index.html';
+        return filename.replace(/\.[^.]+$/, '') === item.name;
       },
       _title: function(item) {
-        return item.title || item.name;
+        return item.title || item.name;
       }
     });
   </script>
