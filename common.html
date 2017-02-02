@@ -28,7 +28,7 @@
 
 <script>
   [].forEach.call(document.querySelectorAll('h3'), function(h3) {
-    var id = h3.textContent.toLowerCase().replace(/[^\w]+/, '-');
+    var id = h3.textContent.toLowerCase().replace(/[^\w]+/g, '-');
     var hash = '#' + id;
     var a = document.createElement('a');
     a.textContent = '🔗';
