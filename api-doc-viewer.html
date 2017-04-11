@@ -1,0 +1,75 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../iron-doc-viewer/iron-doc-viewer.html">
+
+<!--
+  Temporary (yeah, right) replacement for <iron-component-page> until
+  Polymer 2.0 elements are properly supported.
+-->
+
+<dom-module id="api-doc-viewer">
+  <template>
+    <style>
+      :host {
+        display: block;
+        max-width: 48em;
+        padding: 20px;
+        margin: 0 auto;
+      }
+    </style>
+    <iron-ajax url="[[url]]" auto last-response="{{_response}}"></iron-ajax>
+    <iron-doc-viewer id="viewer" descriptor="[[_descriptor(_response, elementName)]]"></iron-doc-viewer>
+  </template>
+  <script>
+    Polymer({
+      is: 'api-doc-viewer',
+
+      properties: {
+        url: String,
+        elementName: String
+      },
+
+      _descriptor(response, elementName) {
+        if (!response || !elementName) {
+          return;
+        }
+
+        var descriptor = {};
+
+        var element = response.elements.filter(el => el.tagname === elementName)[0];
+
+        descriptor.is = element.tagname;
+        descriptor.desc = element.description;
+        descriptor.properties = element.properties.concat(
+          element.methods.map(m => {
+            m.type = 'Function';
+            m.function = true;
+            return m;
+          })).map(item => {
+          item.type = this._toFirstUpperCase(item.type);
+          item.private = item.privacy !== 'public';
+          item.desc = item.description;
+          item.notify = item.metadata.polymer && item.metadata.polymer.notify;
+          item.readOnly = item.metadata.polymer && item.metadata.polymer.readOnly;
+          item.default = item.defaultValue;
+          return item;
+        }).sort((a, b) => {
+          return a.name >= b.name ? 1 : -1;
+        });
+
+        descriptor.events = element.events.map(e => {
+          e.desc = e.description;
+          return e;
+        }).sort((a, b) => {
+          return a.name >= b.name ? 1 : -1;
+        });
+
+        return descriptor;
+      },
+
+      _toFirstUpperCase(value) {
+        return value.substring(0, 1).toUpperCase() + value.substring(1, value.length);
+      }
+    });
+  </script>
+</dom-module>
