@@ -5,6 +5,7 @@
 <!--
   Temporary (yeah, right) replacement for <iron-component-page> until
   Polymer 2.0 elements are properly supported.
+  Documentation Json can be updated by running `polymer analyze element.html > doc.json`
 -->
 
 <dom-module id="api-doc-viewer">
@@ -41,11 +42,7 @@
         descriptor.is = element.tagname;
         descriptor.desc = element.description;
         descriptor.properties = element.properties.concat(
-          element.methods.map(m => {
-            m.type = 'Function';
-            m.function = true;
-            return m;
-          })).map(item => {
+          this._methods(element.methods)).map(item => {
           item.type = this._toFirstUpperCase(item.type);
           item.private = item.privacy !== 'public';
           item.desc = item.description;
@@ -57,14 +54,31 @@
           return a.name >= b.name ? 1 : -1;
         });
 
-        descriptor.events = element.events.map(e => {
-          e.desc = e.description;
-          return e;
-        }).sort((a, b) => {
-          return a.name >= b.name ? 1 : -1;
-        });
+        descriptor.events = this._events(element.events)
 
         return descriptor;
+      },
+
+      _methods(methods) {
+        return methods.map(m => {
+          m.type = 'Function';
+          m.function = true;
+          return m;
+        });
+      },
+
+      _events(events) {
+        return events
+          // Currently, analyzer doesn't report notification events
+          // from mixin properties so it's better to hide them all
+          // for consistency.
+          .filter(e => e.name.indexOf('-changed') === -1)
+          .map(e => {
+            e.desc = e.description;
+            return e;
+          }).sort((a, b) => {
+            return a.name >= b.name ? 1 : -1;
+          });
       },
 
       _toFirstUpperCase(value) {
