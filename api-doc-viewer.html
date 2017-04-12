@@ -19,7 +19,7 @@
       }
     </style>
     <iron-ajax url="[[url]]" auto last-response="{{_response}}"></iron-ajax>
-    <iron-doc-viewer id="viewer" descriptor="[[_descriptor(_response, elementName)]]"></iron-doc-viewer>
+    <iron-doc-viewer id="viewer" descriptor="[[_descriptor(_response, elementClassName)]]"></iron-doc-viewer>
   </template>
   <script>
     Polymer({
@@ -27,17 +27,21 @@
 
       properties: {
         url: String,
-        elementName: String
+        elementClassName: String
       },
 
-      _descriptor(response, elementName) {
-        if (!response || !elementName) {
+      _descriptor(response, elementClassName) {
+        if (!response || !elementClassName) {
           return;
         }
 
         var descriptor = {};
+        var namespace = elementClassName.split('.')[0];
 
-        var element = response.elements.filter(el => el.tagname === elementName)[0];
+        var element = response.namespaces
+            .find(ns => ns.name === namespace)
+            .elements
+            .find(el => el.classname === elementClassName);
 
         descriptor.is = element.tagname;
         descriptor.desc = element.description;
