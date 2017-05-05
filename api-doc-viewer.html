@@ -60,6 +60,9 @@
 
         descriptor.events = this._events(element.events)
 
+        // Envoke hash scrolling navigation after rendering the new descriptor
+        setTimeout(() => this.$.viewer.scrollToAnchor(location.hash));
+
         return descriptor;
       },
 
