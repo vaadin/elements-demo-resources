@@ -1,6 +1,6 @@
 {
   "name": "elements-demo-resources",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "authors": [
     "Vaadin Ltd"
   ],
@@ -13,11 +13,9 @@
     "bower_components"
   ],
   "dependencies": {
-    "iron-demo-helpers": "2.0-preview",
+    "iron-demo-helpers": "^2.0.0",
     "iframe-resizer": "^3.5.8",
-    "iron-doc-viewer": "2.0-preview",
-    "iron-ajax": "2.0-preview",
-    "marked-element": "2.0-preview",
-    "prism-element": "2.0-preview"
+    "iron-doc-viewer": "^2.0.0",
+    "iron-ajax": "^2.0.0"
   }
 }
