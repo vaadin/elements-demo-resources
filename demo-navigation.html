@@ -27,49 +27,207 @@ Then, just include the component in each demo page.
 -->
 
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../vaadin-icons/vaadin-icons.html">
+
 <dom-module id="demo-navigation">
   <template>
     <style>
-      nav {
-        background: white;
-        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
-                    0 1px 5px 0 rgba(0, 0, 0, 0.12),
-                    0 3px 1px -2px rgba(0, 0, 0, 0.2);
-        padding: 8px 20px 8px 20px;
-        text-transform: uppercase;
-      }
-      nav > ul {
-        padding: 0;
+      :host {
         display: flex;
-        flex-wrap: wrap;
+        flex-direction: column;
+        padding: 8px 24px;
+        font-size: 0.875em;
+        font-weight: 500;
+        position: fixed;
+        z-index: 10;
+        left: 0;
+        top: 0;
+        max-width: var(--demo-navigation-max-width);
+        box-sizing: border-box;
+        height: 100vh;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
       }
-      nav > ul > li {
-        padding: 0 24px 0 0;
+
+      .header {
+        outline: none;
+      }
+
+      nav {
+        flex-grow: 1;
+      }
+
+      nav ul {
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
         list-style: none;
       }
-      nav a, nav b {
-        @apply(--paper-font-button);
+
+      nav li {
+        display: block;
       }
+
+      .title {
+        padding: 8px 0;
+      }
+
       nav a {
-        color: var(--primary-color);
         text-decoration: none;
+        color: inherit;
+        opacity: 0.6;
+        display: block;
       }
-      nav b {
-        color: var(--secondary-text-color);
+
+      nav a:hover {
+        opacity: 1;
+      }
+
+      nav .current .title::before {
+        content: "›";
+        width: 0.8em;
+        position: absolute;
+        transform: translateX(-100%);
+      }
+
+      nav .current .sections:not(:empty) {
+        margin-top: 8px;
+      }
+
+      nav .current .sections {
+        border-left: 2px solid rgba(0,0,0,0.2);
+      }
+
+      nav .current .sections a {
+        display: block;
+        font-weight: 400;
+        margin: 8px 0;
+        padding: 0;
+        margin-left: 1em;
+      }
+
+      nav .current .sections a:target {
+        opacity: 1;
+        color: #000;
+      }
+
+      nav .group h4 {
+        font-size: 0.875em;
+        text-transform: uppercase;
+        font-weight: 500;
+        letter-spacing: 0.03em;
+        margin: 1.5em 0 0.5em;
+      }
+
+      @media screen and (max-width: 800px) {
+        :host {
+          max-width: none;
+          width: 100%;
+          padding: 0;
+          overflow: visible;
+          -webkit-overflow-scrolling: none;
+        }
+
+        .header {
+          background-color: #fff;
+          padding: 16px;
+          padding-left: 48px;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+          min-height: 32px;
+        }
+
+        .header::before {
+          position: absolute;
+          top: 26px;
+          left: 16px;
+          content: "";
+          width: 20px;
+          height: 2px;
+          background-color: #000;
+          box-shadow: 0 5px 0 0 #000, 0 10px 0 0 #000;
+        }
+
+        .header::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          right: 0;
+          left: 0;
+          bottom: 0;
+          background-color: #000;
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 0.2s;
+        }
+
+        ::slotted(*) {
+          pointer-events: none;
+          margin: 0 !important;
+        }
+
+        nav::after {
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          z-index: 1;
+          background-color: #000;
+          opacity: 0.2;
+        }
+
+        nav {
+          background-color: #fff;
+          transform: translateX(-100%);
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          z-index: 2;
+          padding: 8px 24px;
+          transition: transform 0.2s 0.1s;
+          will-change: transform;
+          overflow: auto;
+          -webkit-overflow-scrolling: touch;
+          box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+          max-width: 90%;
+        }
+
+        .header:focus + nav {
+          transform: translateX(0);
+          transition-delay: 0s;
+        }
+
+        .header:focus::after {
+          opacity: 0.2;
+        }
+
+        .header:focus {
+          pointer-events: none;
+        }
       }
     </style>
+
+    <div class="header" tabindex="0">
+      <slot name="header"></slot>
+    </div>
     <nav>
       <ul class="layout horizontal wrap">
         <template is="dom-repeat" items="[[items]]">
+          <template is="dom-if" if="[[_group(item)]]">
+            <li class="group"><h4>[[_group(item)]]</h4></li>
+          </template>
           <template is="dom-if" if="[[_current(item)]]">
-            <li><b>[[_title(item)]]</b></li>
+            <li class="current"><div class="title">[[_title(item)]]</div></li>
           </template>
           <template is="dom-if" if="[[!_current(item)]]">
-            <li><a href="[[item.name]].html">[[_title(item)]]</a></li>
+            <li><a class="title" href="[[item.name]].html">[[_title(item)]]</a></li>
           </template>
         </template>
       </ul>
     </nav>
+    <slot name="footer"></slot>
   </template>
   <script>
     Polymer({
@@ -81,15 +239,98 @@ Then, just include the component in each demo page.
           }
         }
       },
+
       is: 'demo-navigation',
+
       _current: function(item) {
         var url = window.location.pathname;
         var filename = url.substring(url.lastIndexOf('/') + 1) || 'index.html';
         return filename.replace(/\.[^.]+$/, '') === item.name;
       },
+
       _title: function(item) {
         return item.title || item.name;
+      },
+
+      _group: function(item) {
+        return item.group;
+      },
+
+      attached: function() {
+        var currentSections = "";
+
+        [].forEach.call(document.querySelectorAll(':not(demo-navigation) > h3'), function(h3) {
+          var id = h3.textContent.toLowerCase().replace(/[^\w]+/g, '-');
+          var hash = '#' + id;
+
+          // Link on the page
+          var a = document.createElement('a');
+          a.innerHTML = '<iron-icon icon="vaadin:link"></iron-icon>';
+          a.classList.add('anchor');
+          a.href = hash;
+          a.id = id;
+          a.setAttribute('aria-hidden', true);
+          h3.insertBefore(a, h3.firstChild);
+
+          // Link in the menu
+          var a = a.cloneNode();
+          a.textContent = h3.textContent;
+          currentSections += a.outerHTML;
+
+          if (window.location.hash == hash) {
+            setTimeout(function() {
+              h3.scrollIntoView();
+            }, 500);
+          }
+        });
+
+        setTimeout(function() {
+          this.root.querySelector(".current").innerHTML += '<div class="sections">' + currentSections + '</div>';
+        }.bind(this), 100);
       }
     });
   </script>
 </dom-module>
+
+<custom-style>
+  <style is="custom-style">
+    html {
+      --demo-navigation-max-width: 220px;
+    }
+
+    h3 .anchor {
+      opacity: 0;
+      position: absolute;
+      transform: translate(-100%, -5%);
+      will-change: opacity;
+      color: inherit;
+      padding-right: 0.3em;
+      --iron-icon-width: 16px;
+      transition: opacity 0.2s 0.5s;
+    }
+
+    h3:hover .anchor {
+      opacity: 0.3;
+      transition-delay: 0s;
+    }
+
+    h3:hover .anchor:hover {
+      opacity: 1;
+    }
+
+    h3 .anchor:target {
+      outline: none;
+    }
+
+    body {
+      padding-left: var(--demo-navigation-max-width);
+    }
+
+    @media screen and (max-width: 800px) {
+      body {
+        padding-left: 0;
+        padding-top: 64px;
+      }
+    }
+  </style>
+</custom-style>
