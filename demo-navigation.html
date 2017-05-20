@@ -47,6 +47,7 @@ Then, just include the component in each demo page.
         height: 100vh;
         overflow: auto;
         -webkit-overflow-scrolling: touch;
+        outline: none;
       }
 
       .header {
@@ -127,6 +128,7 @@ Then, just include the component in each demo page.
           padding: 0;
           overflow: visible;
           -webkit-overflow-scrolling: none;
+          pointer-events: none;
         }
 
         .header {
@@ -135,6 +137,8 @@ Then, just include the component in each demo page.
           padding-left: 48px;
           box-shadow: 0 2px 5px rgba(0,0,0,0.1);
           min-height: 32px;
+          pointer-events: auto;
+          -webkit-tap-highlight-color: transparent;
         }
 
         .header::before {
@@ -148,7 +152,7 @@ Then, just include the component in each demo page.
           box-shadow: 0 5px 0 0 #000, 0 10px 0 0 #000;
         }
 
-        .header::after {
+        .curtain {
           content: "";
           position: absolute;
           top: 0;
@@ -166,7 +170,7 @@ Then, just include the component in each demo page.
           margin: 0 !important;
         }
 
-        nav::after {
+        /*nav::after {
           position: absolute;
           top: 0;
           right: 0;
@@ -175,7 +179,7 @@ Then, just include the component in each demo page.
           z-index: 1;
           background-color: #000;
           opacity: 0.2;
-        }
+        }*/
 
         nav {
           background-color: #fff;
@@ -192,6 +196,7 @@ Then, just include the component in each demo page.
           -webkit-overflow-scrolling: touch;
           box-shadow: 2px 0 10px rgba(0,0,0,0.2);
           max-width: 90%;
+          pointer-events: auto;
         }
 
         .header:focus + nav {
@@ -199,8 +204,9 @@ Then, just include the component in each demo page.
           transition-delay: 0s;
         }
 
-        .header:focus::after {
+        .header:focus ~ .curtain {
           opacity: 0.2;
+          pointer-events: auto;
         }
 
         .header:focus {
@@ -209,7 +215,7 @@ Then, just include the component in each demo page.
       }
     </style>
 
-    <div class="header" tabindex="0">
+    <div class="header" tabindex="-1">
       <slot name="header"></slot>
     </div>
     <nav>
@@ -227,6 +233,7 @@ Then, just include the component in each demo page.
         </template>
       </ul>
     </nav>
+    <div class="curtain"></div>
     <slot name="footer"></slot>
   </template>
   <script>
@@ -258,6 +265,8 @@ Then, just include the component in each demo page.
 
       attached: function() {
         var currentSections = "";
+
+        this.tabIndex = -1;
 
         [].forEach.call(document.querySelectorAll(':not(demo-navigation) > h3'), function(h3) {
           var id = h3.textContent.toLowerCase().replace(/[^\w]+/g, '-');
