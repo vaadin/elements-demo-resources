@@ -41,7 +41,7 @@
         var element = response.namespaces
             .find(ns => ns.name === namespace)
             .elements
-            .find(el => el.classname === elementClassName);
+            .find(el => el.name === elementClassName);
 
         descriptor.is = element.tagname;
         descriptor.desc = element.description;
