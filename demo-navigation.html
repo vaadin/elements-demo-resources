@@ -315,7 +315,8 @@ Then, just include the component in each demo page.
       color: inherit;
       padding-right: 0.3em;
       --iron-icon-width: 16px;
-      transition: opacity 0.2s 0.5s;
+      transition: opacity 0.2s 0.3s;
+      outline: none;
     }
 
     h3:hover .anchor {
@@ -323,8 +324,10 @@ Then, just include the component in each demo page.
       transition-delay: 0s;
     }
 
-    h3:hover .anchor:hover {
+    h3:hover .anchor:hover,
+    h3 .anchor:focus {
       opacity: 1;
+      transition-delay: 0s;
     }
 
     h3 .anchor:target {
