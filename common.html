@@ -1,6 +1,6 @@
 <custom-style>
   <style is="custom-style">
-    body {
+    html {
       font-family: -apple-system, BlinkMacSystemFont, “Segoe UI”, Roboto, Helvetica, Arial, sans-serif;
       -webkit-text-size-adjust: 100%;
       -moz-osx-font-smoothing: auto;
@@ -9,12 +9,19 @@
       margin: 0;
       box-sizing: border-box;
       color: rgba(0,0,0,0.85);
-      /* Don't define a background-color so that the main page background will show through the iframe on vaadin.com */
+      background-color: #fff;
     }
 
     .vertical-section-container {
       margin: 48px 0 96px;
       padding: 0 48px;
+    }
+
+    @media screen and (max-width: 500px) {
+      .vertical-section-container {
+        margin: 24px 0 64px;
+        padding: 0 24px;
+      }
     }
 
     .centered {
@@ -25,44 +32,76 @@
 
     h1 {
       font-size: 2.441em;
-      font-weight: 300;
+      font-weight: 500;
       color: #000;
-      margin-top: 1.2em;
-      margin-bottom: 0.7em;
+      margin-top: 1.4em;
+      margin-bottom: 1em;
     }
 
     h2 {
       font-size: 1.953em;
-      font-weight: 300;
+      font-weight: 500;
+      color: #000;
+      margin-top: 1.2em;
+      margin-bottom: 0.8em;
+    }
+
+    h3 {
+      font-size: 1.563em;
+      font-weight: 500;
       color: #000;
       margin-top: 1em;
       margin-bottom: 0.6em;
     }
 
-    h3 {
-      font-size: 1.563em;
-      font-weight: 300;
+    h4 {
+      font-size: 1.25em;
+      font-weight: 500;
       color: #000;
       margin-top: 0.8em;
       margin-bottom: 0.5em;
     }
 
-    h4 {
-      font-size: 1.25em;
-      font-weight: 400;
+    h5 {
+      font-size: 1em;
+      font-weight: 500;
       color: #000;
+      margin-top: 0.8em;
+      margin-bottom: 0.5em;
     }
 
-    nice-demo-snippet {
-      margin-bottom: 40px;
+    a {
+      color: inherit;
+      position: relative;
+      text-decoration: none;
+      background-image: linear-gradient(to bottom, rgba(0,0,0,0.4) 50%, transparent 50%);
+      background-repeat: repeat-x;
+      background-size: 2px 0.1em;
+      background-position: 0 1.14em
     }
 
-    @media screen and (max-width: 400px) {
-      .vertical-section-container {
-        margin: 24px 0 64px;
-        padding: 0 24px;
-      }
+    .note {
+      font-size: 0.875em;
+      overflow: hidden;
+      margin-bottom: 1em;
+      background-color: rgb(226,246,255);
+      max-width: 100%;
+      padding: 0 1em;
     }
+
+    .note.warn {
+      background-color: rgb(255,252,223);
+    }
+
+    .note pre {
+      max-width: 100%;
+      overflow: auto;
+    }
+
+    nice-demo-snippet div[theme~="dark"] {
+      margin: -1em;
+    }
+
   </style>
 </custom-style>
 

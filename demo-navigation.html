@@ -37,25 +37,28 @@ Then, just include the component in each demo page.
         flex-direction: column;
         padding: 8px 24px;
         font-size: 0.875em;
-        font-weight: 500;
         position: fixed;
         z-index: 10;
         left: 0;
         top: 0;
-        max-width: var(--demo-navigation-max-width);
+        width: var(--demo-navigation-width);
         box-sizing: border-box;
         height: 100vh;
         overflow: auto;
         -webkit-overflow-scrolling: touch;
         outline: none;
+        background-color: rgba(0,0,0,0.02);
       }
 
       .header {
         outline: none;
+        font-size: 1.5em;
+        margin: 0.5em 0;
       }
 
       nav {
         flex-grow: 1;
+        font-weight: 500;
       }
 
       nav ul {
@@ -94,10 +97,11 @@ Then, just include the component in each demo page.
 
       nav .current .sections:not(:empty) {
         margin-top: 8px;
+        margin-bottom: 16px;
       }
 
       nav .current .sections {
-        border-left: 2px solid rgba(0,0,0,0.2);
+        border-left: 2px solid rgba(0,0,0,0.1);
       }
 
       nav .current .sections a {
@@ -118,7 +122,7 @@ Then, just include the component in each demo page.
         text-transform: uppercase;
         font-weight: 500;
         letter-spacing: 0.03em;
-        margin: 1.5em 0 0.5em;
+        margin: 1.8em 0 0.5em;
       }
 
       @media screen and (max-width: 800px) {
@@ -129,14 +133,17 @@ Then, just include the component in each demo page.
           overflow: visible;
           -webkit-overflow-scrolling: none;
           pointer-events: none;
+          background-color: transparent;
         }
 
         .header {
           background-color: #fff;
           padding: 16px;
           padding-left: 48px;
+          margin: 0;
           box-shadow: 0 2px 5px rgba(0,0,0,0.1);
           min-height: 32px;
+          line-height: 32px;
           pointer-events: auto;
           -webkit-tap-highlight-color: transparent;
         }
@@ -167,19 +174,7 @@ Then, just include the component in each demo page.
 
         ::slotted(*) {
           pointer-events: none;
-          margin: 0 !important;
         }
-
-        /*nav::after {
-          position: absolute;
-          top: 0;
-          right: 0;
-          bottom: 0;
-          left: 0;
-          z-index: 1;
-          background-color: #000;
-          opacity: 0.2;
-        }*/
 
         nav {
           background-color: #fff;
@@ -197,6 +192,7 @@ Then, just include the component in each demo page.
           box-shadow: 2px 0 10px rgba(0,0,0,0.2);
           max-width: 90%;
           pointer-events: auto;
+          width: var(--demo-navigation-width);
         }
 
         .header:focus + nav {
@@ -268,8 +264,8 @@ Then, just include the component in each demo page.
 
         this.tabIndex = -1;
 
-        [].forEach.call(document.querySelectorAll(':not(demo-navigation) > h3'), function(h3) {
-          var id = h3.textContent.toLowerCase().replace(/[^\w]+/g, '-');
+        [].forEach.call(document.querySelectorAll('[demo-section]'), function(demoSection) {
+          var id = demoSection.textContent.toLowerCase().replace(/[^\w]+/g, '-');
           var hash = '#' + id;
 
           // Link on the page
@@ -279,16 +275,17 @@ Then, just include the component in each demo page.
           a.href = hash;
           a.id = id;
           a.setAttribute('aria-hidden', true);
-          h3.insertBefore(a, h3.firstChild);
+          demoSection.insertBefore(a, demoSection.firstChild);
 
           // Link in the menu
           var a = a.cloneNode();
-          a.textContent = h3.textContent;
+          a.textContent = demoSection.textContent;
+          a.removeAttribute("id");
           currentSections += a.outerHTML;
 
           if (window.location.hash == hash) {
             setTimeout(function() {
-              h3.scrollIntoView();
+              demoSection.scrollIntoView();
             }, 500);
           }
         });
@@ -304,10 +301,10 @@ Then, just include the component in each demo page.
 <custom-style>
   <style is="custom-style">
     html {
-      --demo-navigation-max-width: 220px;
+      --demo-navigation-width: 220px;
     }
 
-    h3 .anchor {
+    [demo-section] .anchor {
       opacity: 0;
       position: absolute;
       transform: translate(-100%, -5%);
@@ -317,25 +314,26 @@ Then, just include the component in each demo page.
       --iron-icon-width: 16px;
       transition: opacity 0.2s 0.3s;
       outline: none;
+      background: transparent;
     }
 
-    h3:hover .anchor {
+    [demo-section]:hover .anchor {
       opacity: 0.3;
       transition-delay: 0s;
     }
 
-    h3:hover .anchor:hover,
-    h3 .anchor:focus {
+    [demo-section]:hover .anchor:hover,
+    [demo-section] .anchor:focus {
       opacity: 1;
       transition-delay: 0s;
     }
 
-    h3 .anchor:target {
+    [demo-section] .anchor:target {
       outline: none;
     }
 
     body {
-      padding-left: var(--demo-navigation-max-width);
+      padding-left: var(--demo-navigation-width);
     }
 
     @media screen and (max-width: 800px) {
