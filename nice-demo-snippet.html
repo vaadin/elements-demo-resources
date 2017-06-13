@@ -126,7 +126,15 @@
 
 
 <link rel="import" href="../polymer/polymer-element.html">
-<link rel="import" href="../prism-element/prism-highlighter.html">
+<!--
+Importing “prism-highlighter.html” breaks document styles in IE and Edge,
+see: https://github.com/webcomponents/webcomponentsjs/issues/799.
+
+TODO(@platosha): Replace direct Prism usage here back with <prism-highlighter>
+after the issue above is fixed.
+-->
+<!-- <link rel="import" href="../prism&#45;element/prism&#45;highlighter.html"> -->
+<script src="../prism/prism.js" data-manual></script>
 <link rel="import" href="../marked-element/marked-element.html">
 
 <!--
@@ -201,9 +209,8 @@ allowing easy styling and scripting in the parent (document) scope.
     <div class="demo">
       <slot></slot>
     </div>
-    <prism-highlighter></prism-highlighter>
-    <marked-element id="markedElement" class="code">
-      <div slot="markdown-html"></div>
+    <marked-element id="markedElement">
+      <div slot="markdown-html" class="code"></div>
     </marked-element>
     <slot name="source" id="sourceSlot" on-slotchange="_extractSource"></slot>
   </template>
@@ -225,6 +232,20 @@ allowing easy styling and scripting in the parent (document) scope.
           return [
             '_render(_source, _demoRenderer)'
           ];
+        }
+
+        ready() {
+          super.ready();
+
+          // <prism-highlighter>’s job.
+          this.addEventListener('syntax-highlight', (event) => {
+            if (event.detail && event.detail.code) {
+              event.stopPropagation();
+              const detail = event.detail;
+              const lang = detail.lang && Prism.languages[detail.lang] || Prism.languages.markup;
+              detail.code = Prism.highlight(detail.code, lang);
+            }
+          });
         }
 
         connectedCallback() {
