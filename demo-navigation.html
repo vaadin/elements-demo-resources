@@ -36,7 +36,7 @@ Then, just include the component in each demo page.
         display: flex;
         flex-direction: column;
         padding: 8px 24px;
-        font-size: 0.875em;
+        font-size: var(--demo-navigation-font-size, 0.875em);
         position: fixed;
         z-index: 10;
         left: 0;
@@ -58,7 +58,6 @@ Then, just include the component in each demo page.
 
       nav {
         flex-grow: 1;
-        font-weight: 500;
       }
 
       nav ul {
@@ -74,7 +73,7 @@ Then, just include the component in each demo page.
       }
 
       .title {
-        padding: 8px 0;
+        padding: 4px 0;
       }
 
       nav a {
@@ -89,10 +88,18 @@ Then, just include the component in each demo page.
       }
 
       nav .current .title::before {
-        content: "›";
         width: 0.8em;
         position: absolute;
         transform: translateX(-100%);
+      }
+
+      nav .current .title::after {
+        content: "";
+        left: 0;
+        right: 0;
+        position: absolute;
+        height: 1.625em;
+        background-color: var(--demo-navigation-selection-background-color, rgba(0,0,0,0.05));
       }
 
       nav .current .sections:not(:empty) {
@@ -101,7 +108,7 @@ Then, just include the component in each demo page.
       }
 
       nav .current .sections {
-        border-left: 2px solid rgba(0,0,0,0.1);
+        border-left: var(--demo-navigation-current-section-border, 2px solid rgba(0,0,0,0.1));
       }
 
       nav .current .sections a {
@@ -120,7 +127,7 @@ Then, just include the component in each demo page.
       nav .group h4 {
         font-size: 0.875em;
         text-transform: uppercase;
-        font-weight: 500;
+        font-weight: 600;
         letter-spacing: 0.03em;
         margin: 1.8em 0 0.5em;
       }

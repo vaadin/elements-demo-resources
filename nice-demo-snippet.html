@@ -190,7 +190,10 @@ allowing easy styling and scripting in the parent (document) scope.
         padding: 1em;
       }
 
-      :host([code-only]) .demo {
+      :host([code-only]) .demo,
+      :host([code-only]) .view-code,
+      :host([code-only]) .view-code + label,
+      :host(:not([code-only])) .code {
         display: none;
       }
 
@@ -209,10 +212,34 @@ allowing easy styling and scripting in the parent (document) scope.
         font-family: var(--nice-demo-snippet-code-font-family);
       }
 
-      marked-element {
-        background-color: #fff;
+      .view-code {
+        opacity: 0;
+        position: absolute;
+      }
+
+      .view-code:checked ~ marked-element .code {
+        display: block;
+      }
+
+      .view-code + label {
+        position: absolute;
+        top: 1px;
+        right: 1px;
+        padding: 0.5em 1em;
+        font-size: 13px;
+        background-color: var(--nice-demo-snippet-view-source-background-color, rgba(0,0,0,0.03));
+        border-bottom-left-radius: inherit;
+      }
+
+      .view-code + label::before {
+        content: "View ";
+      }
+
+      .view-code:checked + label::before {
+        content: "Hide ";
       }
     </style>
+    <input type="checkbox" class="view-code"><label>Source</label>
     <div class="demo">
       <slot></slot>
     </div>
@@ -243,6 +270,14 @@ allowing easy styling and scripting in the parent (document) scope.
 
         ready() {
           super.ready();
+
+          if (!NiceDemoSnippetElement.prototype.idCount) {
+            NiceDemoSnippetElement.prototype.idCount = 1;
+          }
+
+          let id = "nice-demo-snippet-" + NiceDemoSnippetElement.prototype.idCount++;
+          this.root.querySelector("input[type=checkbox]").id = id;
+          this.root.querySelector("input[type=checkbox] + label").setAttribute("for", id);
 
           // <prism-highlighter>’s job.
           this.addEventListener('syntax-highlight', (event) => {
