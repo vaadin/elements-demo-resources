@@ -87,18 +87,17 @@ Then, just include the component in each demo page.
         opacity: 1;
       }
 
-      nav .current .title::before {
-        width: 0.8em;
-        position: absolute;
-        transform: translateX(-100%);
+      nav .current .title {
+        position: relative;
       }
 
       nav .current .title::after {
         content: "";
-        left: 0;
-        right: 0;
+        top: 0;
+        right: -24px;
+        bottom: 0;
+        left: -24px;
         position: absolute;
-        height: 1.625em;
         background-color: var(--demo-navigation-selection-background-color, rgba(0,0,0,0.05));
       }
 
