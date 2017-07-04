@@ -14,8 +14,6 @@
   ],
   "dependencies": {
     "iron-demo-helpers": "^2.0.0",
-    "iframe-resizer": "^3.5.8",
-    "iron-doc-viewer": "^3.0.0",
-    "iron-ajax": "^2.0.0"
+    "iframe-resizer": "^3.5.8"
   }
 }
