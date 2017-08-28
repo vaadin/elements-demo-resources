@@ -171,7 +171,6 @@ allowing easy styling and scripting in the parent (document) scope.
         display: block;
         position: relative;
         margin: 1em 0;
-        overflow: hidden;
       }
 
       :host::after {
@@ -188,6 +187,13 @@ allowing easy styling and scripting in the parent (document) scope.
 
       .demo {
         padding: 1em;
+        border-radius: inherit;
+        overflow: hidden;
+      }
+
+      .view-code:checked ~ .demo {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
       }
 
       :host([code-only]) .demo,
@@ -241,6 +247,11 @@ allowing easy styling and scripting in the parent (document) scope.
 
       .view-code:checked + label::before {
         content: "Hide ";
+      }
+
+      .view-code:focus + label {
+        box-shadow: var(--nice-demo-snippet-view-source-focus-box-shadow, 0 0 6px #257cff);
+        border-radius: inherit;
       }
     </style>
     <input type="checkbox" class="view-code"><label>Source</label>
