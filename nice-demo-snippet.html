@@ -317,7 +317,9 @@ allowing easy styling and scripting in the parent (document) scope.
 
         _extractSource() {
           this._source = this.$.markedElement.unindent(
-              this.$.sourceSlot.assignedNodes().map(node => node.innerHTML).join('')
+              this.$.sourceSlot.assignedNodes().map(node => {
+                return node.innerHTML.replace(/=""/g, '');
+              }).join('')
           );
         }
 
