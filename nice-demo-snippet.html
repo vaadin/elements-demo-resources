@@ -227,8 +227,12 @@ allowing easy styling and scripting in the parent (document) scope.
         right: 1px;
         padding: 0.5em 1em;
         font-size: 13px;
-        background-color: var(--nice-demo-snippet-view-source-background-color, rgba(0,0,0,0.03));
+        background-color: #fff;
+        background-image: linear-gradient(var(--nice-demo-snippet-view-source-background-color, rgba(0,0,0,0.03)),
+                                          var(--nice-demo-snippet-view-source-background-color, rgba(0,0,0,0.03)));
+        color: inherit;
         border-bottom-left-radius: inherit;
+        border-top-right-radius: inherit;
       }
 
       .view-code + label::before {
@@ -271,13 +275,10 @@ allowing easy styling and scripting in the parent (document) scope.
         ready() {
           super.ready();
 
-          if (!NiceDemoSnippetElement.prototype.idCount) {
-            NiceDemoSnippetElement.prototype.idCount = 1;
-          }
-
-          let id = "nice-demo-snippet-" + NiceDemoSnippetElement.prototype.idCount++;
-          this.root.querySelector("input[type=checkbox]").id = id;
-          this.root.querySelector("input[type=checkbox] + label").setAttribute("for", id);
+          // iOS needs this, <label for="id"> doesn’t seem to work (facepalm)
+          this.root.querySelector('input[type=checkbox] + label').addEventListener('click', function() {
+            this.previousSibling.checked = !this.previousSibling.checked;
+          });
 
           // <prism-highlighter>’s job.
           this.addEventListener('syntax-highlight', (event) => {
