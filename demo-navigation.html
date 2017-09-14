@@ -35,7 +35,7 @@ Then, just include the component in each demo page.
       :host {
         display: flex;
         flex-direction: column;
-        padding: 8px 24px;
+        padding: 8px 24px 64px;
         font-size: var(--demo-navigation-font-size, 0.875em);
         position: fixed;
         z-index: 10;
@@ -88,17 +88,14 @@ Then, just include the component in each demo page.
       }
 
       nav .current .title {
-        position: relative;
+        font-weight: 600;
+        color: var(--demo-navigation-selected-item-color, blue);
       }
 
-      nav .current .title::after {
-        content: "";
-        top: 0;
-        right: -24px;
-        bottom: 0;
-        left: -24px;
+      nav .current .title::before {
+        content: "›";
         position: absolute;
-        background-color: var(--demo-navigation-selection-background-color, rgba(0,0,0,0.05));
+        margin-left: -1em;
       }
 
       nav .current .sections:not(:empty) {
@@ -190,7 +187,7 @@ Then, just include the component in each demo page.
           bottom: 0;
           left: 0;
           z-index: 2;
-          padding: 8px 24px;
+          padding: 8px 24px 64px;
           transition: transform 0.2s 0.1s;
           will-change: transform;
           overflow: auto;
