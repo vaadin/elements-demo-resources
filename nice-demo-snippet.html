@@ -305,13 +305,13 @@ allowing easy styling and scripting in the parent (document) scope.
         connectedCallback() {
           super.connectedCallback();
 
+          this._extractSource();
+
           if (!this._demoRenderer) {
             const demoRenderer = document.createElement('div');
             this.appendChild(demoRenderer);
             this._demoRenderer = demoRenderer;
           }
-
-          this._extractSource();
         }
 
         disconnectedCallback() {
