@@ -205,7 +205,7 @@ allowing easy styling and scripting in the parent (document) scope.
 
       .code {
         background-color: var(--nice-demo-snippet-code-background-color, rgba(0,0,0,0.03));
-        color: inherit;
+        color: var(--nice-demo-snippet-code-color, inherit);
         padding: 0 1em;
         max-height: 20em;
         overflow: auto;
@@ -233,9 +233,8 @@ allowing easy styling and scripting in the parent (document) scope.
         right: 1px;
         padding: 0.5em 1em;
         font-size: 13px;
-        background-color: #fff;
-        background-image: linear-gradient(var(--nice-demo-snippet-view-source-background-color, rgba(0,0,0,0.03)),
-                                          var(--nice-demo-snippet-view-source-background-color, rgba(0,0,0,0.03)));
+        background-color: var(--nice-demo-snippet-view-source-background-color);
+        background-image: var(--nice-demo-snippet-view-source-background-image, linear-gradient(rgba(0,0,0,0.03), rgba(0,0,0,0.03)));
         color: inherit;
         border-bottom-left-radius: inherit;
         border-top-right-radius: inherit;
