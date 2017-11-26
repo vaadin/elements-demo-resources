@@ -92,6 +92,7 @@ Then, just include the component in each demo page.
         color: var(--demo-navigation-selected-item-color, blue);
       }
 
+      nav a:hover::before,
       nav .current .title::before {
         content: "›";
         position: absolute;
@@ -143,12 +144,12 @@ Then, just include the component in each demo page.
           padding: 16px;
           padding-left: 48px;
           margin: 0;
-          box-shadow: inset 0 -1px 0 0 rgba(0,0,0,0.1), 0 2px 5px rgba(0,0,0,0.1);
+          box-shadow: var(--demo-navigation-header-box-shadow, inset 0 -1px 0 0 rgba(0,0,0,0.1), 0 2px 5px rgba(0,0,0,0.1));
           min-height: 32px;
           line-height: 32px;
           pointer-events: auto;
           -webkit-tap-highlight-color: transparent;
-          background-color: var(--demo-navigation-header-background-color, #fff);
+          background: var(--demo-navigation-header-background, #fff);
         }
 
         .header::before {
@@ -156,10 +157,10 @@ Then, just include the component in each demo page.
           top: 26px;
           left: 16px;
           content: "";
-          width: 20px;
+          width: 18px;
           height: 2px;
-          background-color: #000;
-          box-shadow: 0 5px 0 0 #000, 0 10px 0 0 #000;
+          background-color: currentColor;
+          box-shadow: 0 5px 0 0 currentColor, 0 10px 0 0 currentColor;
         }
 
         .curtain {
@@ -169,7 +170,7 @@ Then, just include the component in each demo page.
           right: 0;
           left: 0;
           bottom: 0;
-          background-color: #000;
+          background-color: var(--demo-navigation-drawer-curtain-background-color, rgba(0,0,0,0.2));
           opacity: 0;
           pointer-events: none;
           transition: opacity 0.2s;
@@ -180,7 +181,7 @@ Then, just include the component in each demo page.
         }
 
         nav {
-          background-color: #fff;
+          background-color: var(--demo-navigation-drawer-background-color, #fff);
           transform: translateX(-110%);
           position: absolute;
           top: 0;
@@ -192,7 +193,7 @@ Then, just include the component in each demo page.
           will-change: transform;
           overflow: auto;
           -webkit-overflow-scrolling: touch;
-          box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+          box-shadow: var(--demo-navigation-drawer-box-shadow, var(--demo-navigation-header-box-shadow, 2px 0 10px rgba(0,0,0,0.2)));
           max-width: 90%;
           pointer-events: auto;
           width: var(--demo-navigation-width);
@@ -204,7 +205,7 @@ Then, just include the component in each demo page.
         }
 
         .header:focus ~ .curtain {
-          opacity: 0.2;
+          opacity: 1;
           pointer-events: auto;
         }
 
