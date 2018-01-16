@@ -170,7 +170,7 @@ allowing easy styling and scripting in the parent (document) scope.
       :host {
         display: block;
         position: relative;
-        margin: 1em 0;
+        margin: 2.5em 0 1.25em;
       }
 
       :host::after {
@@ -194,6 +194,10 @@ allowing easy styling and scripting in the parent (document) scope.
       .view-code:checked ~ .demo {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
+      }
+
+      :host([code-only]) {
+        margin: 1.25em 0;
       }
 
       :host([code-only]) .demo,
@@ -229,31 +233,32 @@ allowing easy styling and scripting in the parent (document) scope.
 
       .view-code + label {
         position: absolute;
-        top: 1px;
-        right: 1px;
-        padding: 0.5em 1em;
+        top: -2.5em;
+        right: 0;
+        padding: 0.5em 0.5em 0.6em;
         font-size: 13px;
-        background-color: var(--nice-demo-snippet-view-source-background-color);
-        background-image: var(--nice-demo-snippet-view-source-background-image, linear-gradient(rgba(0,0,0,0.03), rgba(0,0,0,0.03)));
-        color: inherit;
-        border-bottom-left-radius: inherit;
-        border-top-right-radius: inherit;
+        line-height: 1;
+        color: var(--nice-demo-snippet-view-source-color, inherit);
+        background-color: var(--nice-demo-snippet-view-source-background-color, rgba(0, 0, 0, 0.05));
+        border-radius: 0.25em;
+        font-weight: 600;
       }
 
-      .view-code + label::before {
-        content: "View ";
+      .view-code + label:hover {
+        color: var(--nice-demo-snippet-view-source-hover-color);
+        background-color: var(--nice-demo-snippet-view-source-hover-background-color, rgba(0, 0, 0, 0.1));
       }
 
-      .view-code:checked + label::before {
-        content: "Hide ";
+      .view-code:checked + label {
+        color: var(--nice-demo-snippet-view-source-checked-color, #fff);
+        background-color: var(--nice-demo-snippet-view-source-checked-background-color, red);
       }
 
       .view-code:focus + label {
-        box-shadow: var(--nice-demo-snippet-view-source-focus-box-shadow, 0 0 6px #257cff);
-        border-radius: inherit;
+        box-shadow: var(--nice-demo-snippet-view-source-focus-box-shadow, 0 0 0 2px #257cff);
       }
     </style>
-    <input type="checkbox" class="view-code"><label>Source</label>
+    <input type="checkbox" class="view-code"><label aria-label="View source" tooltip="View source">&lt;/&gt;</label>
     <div class="demo">
       <slot></slot>
     </div>
