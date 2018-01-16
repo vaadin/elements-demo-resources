@@ -13,12 +13,9 @@
     "bower_components"
   ],
   "dependencies": {
-    "iron-demo-helpers": "^2.0.0",
-    "prism-element": "^2.0.0",
-    "prism": "*",
-    "iframe-resizer": "^3.5.8",
-    "iron-doc-viewer": "^2.0.0",
-    "iron-ajax": "^2.0.0",
+    "polymer": "Polymer/polymer#^2.0.0",
+    "marked-element": "PolymerElements/marked-element#^2.0.0",
+    "prism-element": "PolymerElements/prism-element#^2.0.0",
     "vaadin-icons": "^4.0.0"
   }
 }
