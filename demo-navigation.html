@@ -88,7 +88,7 @@ Then, just include the component in each demo page.
       }
 
       nav .current .title {
-        font-weight: 600;
+        font-weight: var(--demo-navigation-selected-item-font-weight, 600);
         color: var(--demo-navigation-selected-item-color, blue);
       }
 
@@ -124,7 +124,7 @@ Then, just include the component in each demo page.
       nav .group h4 {
         font-size: 0.875em;
         text-transform: uppercase;
-        font-weight: 600;
+        font-weight: var(--demo-navigation-group-title-font-weight, 600);
         letter-spacing: 0.03em;
         margin: 1.8em 0 0.5em;
       }
